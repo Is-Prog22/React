@@ -162,4 +162,6 @@ app.get('*', (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`✅ Сервер запущен на http://localhost:${PORT}`);
+}).on('error', (err) => {
+  console.error('Ошибка запуска сервера:', err);
 });
