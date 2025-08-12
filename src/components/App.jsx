@@ -27,9 +27,9 @@ function App() {
     const fetchData = async () => {
       try {
         const [productsRes, categoriesRes, usersRes] = await Promise.all([
-          fetch('/products'),
-          fetch('/categories'),
-          fetch('/users'),
+          fetch('/api/products'),
+          fetch('/api/categories'),
+          fetch('/api/users'),
         ]);
 
         if (!productsRes.ok || !categoriesRes.ok || !usersRes.ok) {
@@ -80,7 +80,7 @@ function App() {
 
   const addProduct = async (formData) => {
     try {
-      const res = await fetch('/products', {
+      const res = await fetch('/api/products', {
         method: 'POST',
         body: formData,
       });
@@ -98,7 +98,7 @@ function App() {
 
   const updateProduct = async (id, formData) => {
     try {
-      const res = await fetch(`/products/${id}`, {
+      const res = await fetch(`/api/products/${id}`, {
         method: 'PUT',
         body: formData,
       });
@@ -117,7 +117,7 @@ function App() {
 
   const deleteProduct = async (id) => {
     try {
-      const res = await fetch(`/products/${id}`, {
+      const res = await fetch(`/api/products/${id}`, {
         method: 'DELETE',
       });
 
@@ -136,7 +136,7 @@ function App() {
     }
 
     try {
-      const res = await fetch('/categories', {
+      const res = await fetch('/api/categories', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(category),
@@ -155,7 +155,7 @@ function App() {
 
   const deleteCategory = async (id) => {
     try {
-      const res = await fetch(`/categories/${id}`, {
+      const res = await fetch(`/api/categories/${id}`, {
         method: 'DELETE',
       });
 
