@@ -3,38 +3,27 @@ import { Link } from 'react-router-dom';
 import { CartContext } from './CartContent';
 
 const Header = ({ isLoggedIn, isAdmin, onLogout, userData }) => {
-  const { cart, totalItems } = useContext(CartContext);
+  const { totalItems } = useContext(CartContext); // ← убрали cart
 
   return (
     <header className="header">
       <div className="header-content">
-        <Link to="/" className="logo">
-          Fast And Trust
-        </Link>
-        
+        <Link to="/" className="logo">Fast And Trust</Link>
         <nav className="nav-links">
           <Link to="/" className="nav-link">Main</Link>
           {isLoggedIn ? (
             <>
-              {isAdmin && (
-                <Link to="/admin" className="nav-link">Admin Panel</Link>
-              )}
-              <Link to="/cart" className="nav-link cart-link">
-                Cart ({totalItems})
-              </Link>
+              {isAdmin && <Link to="/admin" className="nav-link">Admin Panel</Link>}
+              <Link to="/cart" className="nav-link cart-link">Cart ({totalItems})</Link>
               <div className="user-info">
                 <span className="user-email">{userData?.email}</span>
-                <button onClick={onLogout} className="logout-btn">
-                  Sign Out
-                </button>
+                <button onClick={onLogout} className="logout-btn">Sign Out</button>
               </div>
             </>
           ) : (
             <>
               <Link to="/login" className="nav-link">Sign In</Link>
-              <Link to="/cart" className="nav-link cart-link">
-                Cart ({totalItems})
-              </Link>
+              <Link to="/cart" className="nav-link cart-link">Cart ({totalItems})</Link>
             </>
           )}
         </nav>
