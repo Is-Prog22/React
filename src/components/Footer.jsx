@@ -8,8 +8,8 @@ const Footer = () => (
   <footer className="footer">
     <nav className="footer-links">
       <Link to="/about" className="footer-link">About Us</Link>
-      <Link to="/advertising" className="footer-link">Реклама</Link>
-      <Link to="/privacy" className="footer-link">Политика конфиденциальности</Link>
+      <Link to="/advertising" className="footer-link">Advertising</Link>
+      <Link to="/privacy" className="footer-link">Policy</Link>
     </nav>
     <div className="footer-rights">
       <span>© {new Date().getFullYear()} Fast And Trust. All rights reserved.</span>
