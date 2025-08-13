@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import '../assets/App.css';
 import Header from './Header';
 import Home from './Home';
@@ -7,7 +7,7 @@ import Category from './Category';
 import Login from './Login';
 import AdminPanel from './AdminPanel';
 import ProductDetail from './ProductDetail';
-import CartPage from './CartPage'; 
+import CartPage from './CartPage';
 import { CartProvider } from './CartContent';
 import Footer from './Footer';
 import About from './About';
@@ -172,9 +172,9 @@ function App() {
     <CartProvider>
       <Router>
         <div className="App">
-          <Header 
-            isLoggedIn={isLoggedIn} 
-            isAdmin={isAdmin} 
+          <Header
+            isLoggedIn={isLoggedIn}
+            isAdmin={isAdmin}
             onLogout={handleLogout}
             userData={userData}
           />
@@ -195,7 +195,7 @@ function App() {
               } />
               <Route path="/admin" element={
                 isAdmin ? (
-                  <AdminPanel 
+                  <AdminPanel
                     products={products}
                     categories={categories}
                     users={users}
@@ -217,18 +217,7 @@ function App() {
           </main>
 
           {/* Footer */}
-          <footer className="footer">
-            <div className="footer-content">
-              <div className="footer-links">
-                <Link to="/about" className="footer-link">About Us</Link>
-                <Link to="/advertising" className="footer-link">Реклама</Link>
-                <Link to="/privacy-policy" className="footer-link">Политика конфиденциальности</Link>
-              </div>
-              <div className="footer-rights">
-                <span>© {new Date().getFullYear()} Fast And Trust. All rights reserved.</span>
-              </div>
-            </div>
-          </footer>
+          <Footer />
         </div>
       </Router>
     </CartProvider>
