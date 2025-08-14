@@ -2,8 +2,8 @@ import React, { useState, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import '../assets/Category.css';
 
-
 const PRODUCTS_PER_PAGE = 12; // сколько товаров показывать за один раз
+const BASE_URL = process.env.REACT_APP_API_URL;
 
 const Category = ({ categories, products }) => {
   const { id } = useParams();
@@ -77,7 +77,7 @@ const Category = ({ categories, products }) => {
                 <div className="product-image">
                   {product.images && product.images.length > 0 ? (
                     <img 
-                      src={`http://localhost:5000${product.images[0]}`} 
+                      src={`${BASE_URL}${product.images[0]}`} 
                       alt={product.name} 
                     />
                   ) : (

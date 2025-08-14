@@ -12,7 +12,7 @@ import { CartProvider } from './CartContent';
 import Footer from './Footer';
 import About from './About';
 import Advertising from './Advertising';
-import PrivacyPolicy from './Privacy';
+import Privacy from './Privacy';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -23,13 +23,18 @@ function App() {
   const [products, setProducts] = useState([]);
   const [users, setUsers] = useState([]);
 
+  // Берём значения из фронтенд .env
+  const API_URL = process.env.REACT_APP_API_URL;
+  const adminEmail = process.env.REACT_APP_ADMIN_EMAIL?.toLowerCase();
+  const adminUsername = process.env.REACT_APP_ADMIN_NAME?.toLowerCase();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const [productsRes, categoriesRes, usersRes] = await Promise.all([
-          fetch('/api/products'),
-          fetch('/api/categories'),
-          fetch('/api/users'),
+          fetch(`${API_URL}/products`),
+          fetch(`${API_URL}/categories`),
+          fetch(`${API_URL}/users`)
         ]);
 
         if (!productsRes.ok || !categoriesRes.ok || !usersRes.ok) {
@@ -50,19 +55,13 @@ function App() {
     };
 
     fetchData();
-  }, []);
+  }, [API_URL]);
 
   const handleLogin = (email, username) => {
     const newUser = { email, username, loginTime: new Date().toISOString() };
     setUsers(prev => [...prev, newUser]);
 
-    const adminEmail = process.env.REACT_APP_ADMIN_EMAIL?.toLowerCase();
-    const adminUsername = process.env.REACT_APP_ADMIN_NAME?.toLowerCase();
-
-    if (
-      email.toLowerCase() === adminEmail &&
-      username.toLowerCase() === adminUsername
-    ) {
+    if (email.toLowerCase() === adminEmail && username.toLowerCase() === adminUsername) {
       setIsAdmin(true);
       setIsLoggedIn(true);
       setUserData(newUser);
@@ -80,7 +79,7 @@ function App() {
 
   const addProduct = async (formData) => {
     try {
-      const res = await fetch('/api/products', {
+      const res = await fetch(`${API_URL}/products`, {
         method: 'POST',
         body: formData,
       });
@@ -98,7 +97,7 @@ function App() {
 
   const updateProduct = async (id, formData) => {
     try {
-      const res = await fetch(`/api/products/${id}`, {
+      const res = await fetch(`${API_URL}/products/${id}`, {
         method: 'PUT',
         body: formData,
       });
@@ -106,7 +105,6 @@ function App() {
       if (!res.ok) throw new Error('Error updating product');
 
       const updated = await res.json();
-
       setProducts(prev => prev.map(p => (p.id === id ? updated : p)));
       return true;
     } catch (error) {
@@ -117,7 +115,7 @@ function App() {
 
   const deleteProduct = async (id) => {
     try {
-      const res = await fetch(`/api/products/${id}`, {
+      const res = await fetch(`${API_URL}/products/${id}`, {
         method: 'DELETE',
       });
 
@@ -136,7 +134,7 @@ function App() {
     }
 
     try {
-      const res = await fetch('/api/categories', {
+      const res = await fetch(`${API_URL}/categories`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(category),
@@ -155,7 +153,7 @@ function App() {
 
   const deleteCategory = async (id) => {
     try {
-      const res = await fetch(`/api/categories/${id}`, {
+      const res = await fetch(`${API_URL}/categories/${id}`, {
         method: 'DELETE',
       });
 
@@ -212,12 +210,12 @@ function App() {
               {/* Новые страницы */}
               <Route path="/about" element={<About />} />
               <Route path="/advertising" element={<Advertising />} />
-              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/privacy" element={<Privacy />} />
             </Routes>
           </main>
 
-          {/* Footer */}
           <Footer />
+        
         </div>
       </Router>
     </CartProvider>

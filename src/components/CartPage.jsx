@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { CartContext } from './CartContent';
 import '../assets/CartPage.css';
 
-const BASE_URL = 'http://localhost:5000'; // потом меняешь на свой домен
+const BASE_URL = process.env.REACT_APP_API_URL;// потом меняешь на свой домен
 
 const CartPage = () => {
   const { 
